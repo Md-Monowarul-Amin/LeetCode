@@ -8,20 +8,14 @@ void Transpose(int** matrix, int matrixSize, int* matrixColSize, int row, int co
     int *temp2 = *(matrix + col * matrixSize + row); //matrix[col][row]
     *(matrix + row * matrixSize + col) = temp2;
     *(matrix + col * matrixSize + row) = temp1;
-    //     for(int i=0; i< 3; i++){
-    //         for(int j=0; j<3; j++){
-    //             printf("%d ", **(matrix + i * 3 + j));
-    //         }
-    // }   
-    // printf("\n");
 }
 
 void ReverseRow(int** matrix, int matrixSize, int* matrixColSize, int row){
-    for(int i = 0; i < *matrixColSize; i++){
+    for(int i = 0; i < *matrixColSize / 2; i++){
         int *temp1 = *(matrix + row * *matrixColSize + i);
-        int *temp2 = *(matrix + row * *matrixColSize + *matrixColSize - i);
+        int *temp2 = *(matrix + row * *matrixColSize + *matrixColSize - i - 1);
         *(matrix + row * *matrixColSize + i) = temp2;
-        *(matrix + row * *matrixColSize + *matrixColSize - i) = temp1;
+        *(matrix + row * *matrixColSize + *matrixColSize - i - 1) = temp1;
     }
 
 }
@@ -36,12 +30,9 @@ void rotate(int** matrix, int matrixSize, int* matrixColSize){
     }
 
     // Make Reverse of Transpose of each row
-    //printf("Reverse of Transpose");
     for (int row=0; row < matrixSize; row ++){
-        //printf("ii");
         ReverseRow(matrix, matrixSize, matrixColSize, row);
     }
-
 }
 
 int main(){
@@ -54,11 +45,12 @@ int main(){
             matrix_cpy[i][j] = temp;
         }
     }
-    rotate(matrix_cpy, 3, &col);
-    //     for(int i=0; i< 3; i++){
-    //         for(int j=0; j<3; j++){
-    //             printf("%d ", **(matrix_cpy + i * 3 + j));
-    //         }
-    // }
+    rotate(matrix_cpy[0], 3, &col);
+    for(int i=0; i< 3; i++){
+        for(int j=0; j<3; j++){
+            printf("%d ", *matrix_cpy[i][j]);
+        }
+        printf("\n");
+    }
     return 0;
 }
